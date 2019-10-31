@@ -2,15 +2,16 @@
 title: "Reproducible Research Week2 Project"
 author: "Ethan Schnelle"
 date: "October 29, 2019"
-output: 
-  html_document: 
+output:
+  html_document:
     keep_md: yes
+  word_document: default
 ---
 
 
 
 ### Introduction
-It is now possible to collect a large amount of data about personal movement using activity monitoring devices such as a Fitbit, Nike Fuelband, or Jawbone Up. These type of devices are part of the “quantified self” movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. But these data remain under-utilized both because the raw data are hard to obtain and there is a lack of statistical methods and software for processing and interpreting the data.
+It is now possible to collect a large amount of data about personal movement using activity monitoring devices such as a Fitbit, Nike Fuelband, or Jawbone Up. These type of devices are part of the quantified self movement - a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks. But these data remain under-utilized both because the raw data are hard to obtain and there is a lack of statistical methods and software for processing and interpreting the data.
 
 This assignment makes use of data from a personal activity monitoring device. This device collects data at 5 minute intervals through out the day. The data consists of two months of data from an anonymous individual collected during the months of October and November, 2012 and include the number of steps taken in 5 minute intervals each day.
 
@@ -55,8 +56,9 @@ Make a histogram of the total number of steps taken each day and Calculate and r
 Are there differences in activity patterns between weekdays and weekends?
 For this part the **weekdays()** function may be of some help here. Use the dataset with the filled-in missing values for this part.
 
-Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+Create a new factor variable in the dataset with two levels weekday vs. weekend indicating whether a given date is a weekday or weekend day.
 Make a panel plot containing a time series plot **type="l"** of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+
 Submitting the Assignmentless 
 To submit the assignment:
 
@@ -68,8 +70,9 @@ Submit the URL to your GitHub repository for this assignment on the course web s
 In addition to submitting the URL for your GitHub repository, you will need to submit the 40 character SHA-1 hash (as string of numbers from 0-9 and letters from a-f) that identifies the repository commit that contains the version of the files you want to submit. You can do this in GitHub by doing the following
 
 Going to your GitHub repository web page for this assignment
-Click on the “?? commits” link where ?? is the number of commits you have in the repository. For example, if you made a total of 10 commits to this repository, the link should say “10 commits”.
-You will see a list of commits that you have made to this repository. The most recent commit is at the very top. If this represents the version of the files you want to submit, then just click the “copy to clipboard” button on the right hand side that should appear when you hover over the SHA-1 hash. Paste this SHA-1 hash into the course web site when you submit your assignment. If you don't want to use the most recent commit, then go down and find the commit you want and copy the SHA-1 hash.
+Click on the **commits** link where ?? is the number of commits you have in the repository. For example, if you made a total of 10 commits to this repository, the link should say **commits**.
+
+You will see a list of commits that you have made to this repository. The most recent commit is at the very top. If this represents the version of the files you want to submit, then just click the **copy to clipboard** button on the right hand side that should appear when you hover over the SHA-1 hash. Paste this SHA-1 hash into the course web site when you submit your assignment. If you don't want to use the most recent commit, then go down and find the commit you want and copy the SHA-1 hash.
 
 
 **Setting global options and loading required libraries**
@@ -122,14 +125,66 @@ library(reshape2)
 ```
 
 ```r
-library (readr) # for GitHub CSV read
+library(tidyverse)
+```
+
+```
+## Warning: package 'tidyverse' was built under R version 3.4.4
+```
+
+```
+## -- Attaching packages ---------------------------------- tidyverse 1.2.1 --
+```
+
+```
+## v tibble  2.1.1       v purrr   0.2.5  
+## v tidyr   0.8.1       v dplyr   0.8.0.1
+## v readr   1.1.1       v stringr 1.3.1  
+## v tibble  2.1.1       v forcats 0.3.0
+```
+
+```
+## Warning: package 'tibble' was built under R version 3.4.4
+```
+
+```
+## Warning: package 'tidyr' was built under R version 3.4.4
 ```
 
 ```
 ## Warning: package 'readr' was built under R version 3.4.4
 ```
 
+```
+## Warning: package 'purrr' was built under R version 3.4.4
+```
+
+```
+## Warning: package 'dplyr' was built under R version 3.4.4
+```
+
+```
+## Warning: package 'stringr' was built under R version 3.4.4
+```
+
+```
+## Warning: package 'forcats' was built under R version 3.4.4
+```
+
+```
+## -- Conflicts ------------------------------------- tidyverse_conflicts() --
+## x dplyr::between()   masks data.table::between()
+## x dplyr::filter()    masks stats::filter()
+## x dplyr::first()     masks data.table::first()
+## x dplyr::lag()       masks stats::lag()
+## x dplyr::last()      masks data.table::last()
+## x purrr::transpose() masks data.table::transpose()
+```
+
 ```r
+library(lattice)
+
+library (readr) # for GitHub CSV read
 library(httr)
 ```
 
@@ -328,7 +383,7 @@ Median Steps Daily = 10,765
 
 #### What is the average daily activity pattern?
 
-##### 1. Make a time series plot (i.e. type = “l”) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+##### 1. Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 ***NOTE: REMOVING NA RECORDS***
 
@@ -759,4 +814,33 @@ axis(1, at=1:7, labels=c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
 ```
 
 ##### ** FINDING - IMPACT OF IMPUTING FOR MISSING STEP VALUES: Imputations removed NA's and as expected impuations changed total steps by day, but imputation by day did not impact by day of week pattern. ** 
+
+
+#### Are there differences in activity patterns between weekdays and weekends?
+
+For this part the weekdays() function may be of some help here. Use the dataset with the filled-in missing values for this part.
+
+Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
+Make a panel plot containing a time series plot (i.e. type="l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+
+
+```r
+#create a weekday vs. weekend field in imputed data table
+activity_data_imputed_x <- activity_data_imputed %>%
+  mutate(
+    weekday = ifelse(weekdays(date) %in% c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"), "weekday", "weekend")
+  )
+
+# set weekday as factor
+activity_data_imputed_x$weekday = as.factor(activity_data_imputed_x$weekday)
+
+#chart weekend and weekday 5 minute time series
+smry_data <- aggregate(steps ~ interval + weekday, data=activity_data_imputed_x, mean)
+with(smry_data, xyplot(steps ~ interval | weekday, type="l", xlab = "Interval", ylab = "Number of steps", layout = c(1, 2)))
+```
+
+![](PA1_template_files/figure-html/weekday vs. weekend 5 minute plots-1.png)<!-- -->
+
+##### ** FINDING - There appears to be a difference in steps by interval weekdays and weekends.  Weekday has more pronounced step activity early and weekend has activity spread throughout the day. ** 
+
 
